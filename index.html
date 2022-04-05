@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="css/style-proyecto02.css">
+	<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+	<title>Calculadora de Propinas</title>
+</head>
+<body>
+	<header>
+		<div class="container-mayor" id="tip_calculator">
+			<!--****************SECCION 1*****************-->
+			
+			<div class="seccion-1">
+				<article class="count">
+					
+					<label for="count">Cuenta</label>
+					<input type="text" name="count" id="count" placeholder="0" autocomplete="off">
+					<i class="fa-solid fa-circle-dollar"></i>
+				</article>				
+
+				<article class="tips">
+					<label id="slc-tip">Seleccione porcentaje</label>
+					<div class="btns-tip" id="btn_tips">
+						<button class="tip" id="tip5" value="5">5%</button>
+						<button class="tip" id="tip10" value="10">10%</button>
+						<button class="tip" id="tip15" value="15">15%</button>
+						<button class="tip" id="tip25" value="25">25%</button>
+						<button class="tip" id="tip50" value="50">50%</button>
+												
+						<input type="text" name="custom" id="custom" placeholder="Opcional">
+					</div>
+				</article>				
+
+				<article class="peopple">
+					<label for="peopple">Número de personas</label>
+					<input type="text" name="peopple" id="peopple" placeholder="0" autocomplete="off">
+				</article>				
+			</div>
+
+			<!--****************SECCION 2*****************-->
+			<div class="seccion-2">				
+				<div class="amount">
+					<article>
+						<label>Monto de propina</label>
+						<span>/persona</span>
+					</article>						
+					<input type="text" name="tip-person" id="tip-person" placeholder="$0.00" disabled>
+				</div>
+
+				<div class="amount">
+					<article>
+						<label>Total</label>
+					</article>						
+					<input type="text" name="total" id="total" placeholder="$0.00" disabled>
+				</div>	
+				
+
+				<div class="reset">
+					<button type="reset" class="btn-reset" onclick="resetear()">RESET</button>
+					
+				</div>				
+			</div>
+			
+		</div>
+	</header>
+	<!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script> -->
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script src="https://kit.fontaweson.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		const calculator = document.getElementById('tip_calculator');
+		const inputs = document.querySelectorAll('#tip_calculator input');
+		const sectTips = document.getElementById('btn_tips');
+		const btnTips = document.querySelectorAll('#btn_tips button');
+
+		const operation = (e) => {
+			var porcent;
+			switch(e.target.value){
+				case "5":
+						porcent = ($("#count").val() / 100) * 5;
+						$('#total').val("$" + porcent);
+				break;
+				case "10":
+						porcent = ($("#count").val() / 100) *10;
+						$('#total').val("$" + porcent);
+				break;
+				case "15":
+						porcent = ($("#count").val() / 100) * 15;
+						$('#total').val("$" + porcent);
+				break;
+				case "25":
+						porcent = ($("#count").val() / 100) * 25;
+						$('#total').val("$" + porcent);
+				break;
+				case "50":
+						porcent = ($("#count").val() / 100) * 50;
+						$('#total').val("$" + porcent);
+				break;
+			}
+		};
+
+		$("#peopple").change(function(){
+			var fTotal = $('#total').val();
+			var total = fTotal.slice(1);
+			var peopple = $('#peopple').val();
+
+			var person = total / peopple;
+			$('#tip-person').val("$" + person);
+		});
+
+		$("#total").change(function(){
+			var regex = /(\d+)/g;
+			var total = ($('#total').val()).match(regex);
+			var peopple = ($('#peopple').val()).match(regex);
+
+			var person = total / peopple;
+			$('#tip-person').val("$" + person);
+		});
+		
+		$("#custom").change(function(){
+			var porcent = ($('#count').val() / 100) * $('#custom').val();
+			$('#total').val("$" + porcent);
+		});
+
+		btnTips.forEach((button) => {
+			button.addEventListener('mouseup', operation);
+		});
+
+		function resetear(){
+			$('#count').val("");
+			$('#custom').val("");
+			$('#peopple').val("");
+			$('#tip-person').val("");
+			$('#total').val("");
+		}
+
+			
+	</script>
+</body>
+</html>
